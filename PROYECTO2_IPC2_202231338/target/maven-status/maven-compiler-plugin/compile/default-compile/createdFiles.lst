@@ -1,4 +1,5 @@
 persistence/UsuarioDAO.class
+controller/RegistrarVentaServlet.class
 controller/ComputadoraServlet.class
 model/Usuario.class
 model/Pieza.class

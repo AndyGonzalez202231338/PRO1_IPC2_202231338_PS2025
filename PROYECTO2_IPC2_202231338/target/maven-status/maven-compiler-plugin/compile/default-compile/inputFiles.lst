@@ -18,5 +18,6 @@
 /home/andy/NetBeansProjects/PROYECTO2_IPC2_202231338/src/main/java/controller/UsuarioServlet.java
 /home/andy/NetBeansProjects/PROYECTO2_IPC2_202231338/src/main/java/controller/VentaServlet.java
 /home/andy/NetBeansProjects/PROYECTO2_IPC2_202231338/src/main/java/aplication/DBConnection.java
+/home/andy/NetBeansProjects/PROYECTO2_IPC2_202231338/src/main/java/controller/RegistrarVentaServlet.java
 /home/andy/NetBeansProjects/PROYECTO2_IPC2_202231338/src/main/java/persistence/RolDAO.java
 /home/andy/NetBeansProjects/PROYECTO2_IPC2_202231338/src/main/java/persistence/PiezaDAO.java

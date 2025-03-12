@@ -23,6 +23,7 @@ import persistence.Ensamblaje_ComputadoraDAO;
  */
 @WebServlet(name = "Ensamblaje_ComputadoraServlet", urlPatterns = {"/Ensamblaje_ComputadoraServlet"})
 public class Ensamblaje_ComputadoraServlet extends HttpServlet {
+
     private Ensamblaje_ComputadoraDAO Ensamblaje_ComputadoraDAO = new Ensamblaje_ComputadoraDAO();
 
     /**
@@ -42,7 +43,7 @@ public class Ensamblaje_ComputadoraServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Ensamblaje_ComputadoraServlet</title>");            
+            out.println("<title>Servlet Ensamblaje_ComputadoraServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet Ensamblaje_ComputadoraServlet at " + request.getContextPath() + "</h1>");
@@ -64,35 +65,59 @@ public class Ensamblaje_ComputadoraServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-                List<Ensamblaje_Computadora> ensamblajeComputadoras = Ensamblaje_ComputadoraDAO.findAll();
-                
-                request.setAttribute("ensamblajeComputadoras", ensamblajeComputadoras);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            // Recuperamos la lista de computadoras ensambladas
+            List<Ensamblaje_Computadora> ensamblajeComputadoras = Ensamblaje_ComputadoraDAO.findAll();
+            
+            // Verifica si se están obteniendo datos
+    System.out.println("Computadoras obtenidas:");
+    for (Ensamblaje_Computadora computadora : ensamblajeComputadoras) {
+        System.out.println("ID: " + computadora.getID() + ", Estado: " + computadora.getEstado());
+    }
+
+            // Seteamos la lista en la request
+            request.setAttribute("ensamblajeComputadoras", ensamblajeComputadoras);
+
+            // Obtenemos el parámetro de vista desde la URL
+            String view = request.getParameter("view");
+
+            // Comprobamos qué vista se solicita y redirigimos según sea necesario
+            String nextPage = "/Ensamblaje/ensamblajeComputadora.jsp"; // Página predeterminada
+
+            if ("computadoraslista".equals(view)) {
+                System.out.println("ENTRO A VENTAS");
+                nextPage = "/Ventas/venta.jsp?view=computadoraslista"; // Si el parámetro es ventas, redirigimos a ventas.jsp
+            }else if ("desplegar".equals(view)) {
+                System.out.println("ENTRO A VENTASss");
+                nextPage = "/Ventas/venta.jsp?view=venta"; // Si el parámetro es ventas, redirigimos a ventas.jsp
             }
-        //RequestDispatcher dispatcher = request.getRequestDispatcher("Administracion/carga.jsp?view=modelos");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Ensamblaje/ensamblajeComputadora.jsp");
-        dispatcher.forward(request, response);
+
+            // Redirigimos a la página correspondiente
+            RequestDispatcher dispatcher = request.getRequestDispatcher(nextPage);
+            dispatcher.forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error en la base de datos");
+        }
     }
 
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    String action = request.getParameter("action");
-    
-    if ("enviarAVentas".equals(action)) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println("id: "+id);
-        
-        try {
-            Ensamblaje_ComputadoraDAO.marcarComoVendible(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
+
+        if ("enviarAVentas".equals(action)) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            System.out.println("id: " + id);
+
+            try {
+                Ensamblaje_ComputadoraDAO.marcarComoVendible(id);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            response.sendRedirect("/PROYECTO2_IPC2_202231338/Ensamblaje/ensamblaje.jsp?view=ensambladaslista");
+            //response.sendRedirect("#");
         }
-        response.sendRedirect("/PROYECTO2_IPC2_202231338/Ensamblaje/ensamblaje.jsp?view=ensambladaslista");
-        //response.sendRedirect("#");
     }
-}
 
     /**
      * Returns a short description of the servlet.

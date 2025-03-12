@@ -56,7 +56,27 @@ public void marcarComoVendible(int id) throws SQLException {
         stmt.executeUpdate(); // Usamos executeUpdate() en lugar de executeQuery()
     }
 }
+    
 
+    public List<Ensamblaje_Computadora> findAllEnVenta() throws SQLException {
+    List<Ensamblaje_Computadora> lista = new ArrayList<>();
+    String sql = "SELECT * FROM Ensamblaje_Computadora WHERE estado = 'En Venta'";
+    
+    try (Connection conn = DBConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            Ensamblaje_Computadora computadora = new Ensamblaje_Computadora();
+            computadora.setID(rs.getInt("id"));
+            computadora.setID_Computadora(rs.getInt("id_computadora"));
+            computadora.setNombreUsuario(rs.getString("nombre_usuario"));
+            computadora.setFechaEnsamblaje(rs.getDate("fecha_ensamblaje"));
+            computadora.setCostoTotal(rs.getDouble("costo_total"));
+            computadora.setEstado(rs.getString("estado"));
+            lista.add(computadora);
+        }
+    }
+    return lista;
+}
 
     @Override
     public void update(Ensamblaje_Computadora entity) throws SQLException {

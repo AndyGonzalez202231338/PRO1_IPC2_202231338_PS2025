@@ -87,7 +87,6 @@
                                     <label class="block text-purple-700">Nombre</label>
                                     <input type="text" name="name" class="w-full p-2 border rounded-lg" required>
                                 </div>
-                            
                                 
                                 <div>
                                     <label class="block text-purple-700">Rol</label>

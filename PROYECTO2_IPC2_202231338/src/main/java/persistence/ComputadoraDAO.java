@@ -44,6 +44,7 @@ public class ComputadoraDAO extends CrudDAO<Computadora> {
             
         }
     }
+        System.out.println("Computadoras cargadas desde la BD: " + computadoras.size()); // DEPURACIÓN
         return computadoras;
     }
 

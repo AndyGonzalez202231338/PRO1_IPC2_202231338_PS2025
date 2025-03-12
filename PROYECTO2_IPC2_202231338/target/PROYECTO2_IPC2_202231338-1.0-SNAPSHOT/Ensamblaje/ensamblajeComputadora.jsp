@@ -64,31 +64,31 @@
                         <td class="px-24 py-2"><%=   computadora.getFechaEnsamblaje()%></td>
                         <td class="px-24 py-2">$<%=  computadora.getCostoTotal()%></td>
                         <td class="px-24 py-2">
-    <% if ("Ensamblada".equals(computadora.getEstado())) { %>
-        <form action="/PROYECTO2_IPC2_202231338/Ensamblaje_ComputadoraServlet" method="POST">
-            <input type="hidden" name="action" value="enviarAVentas">
-            <input type="hidden" name="id" value="<%= computadora.getID() %>">
-            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">
-                Enviar a Ventas
-            </button>
-        </form>
-    <% } else { %>
-        <span class="text-gray-500">En Venta</span>
-    <% } %>
-</td>
+                            <% if ("Ensamblada".equals(computadora.getEstado())) {%>
+                            <form action="/PROYECTO2_IPC2_202231338/Ensamblaje_ComputadoraServlet" method="POST">
+                                <input type="hidden" name="action" value="enviarAVentas">
+                                <input type="hidden" name="id" value="<%= computadora.getID()%>">
+                                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">
+                                    Enviar a Ventas
+                                </button>
+                            </form>
+                            <% } else { %>
+                            <span class="text-gray-500">En Venta</span>
+                            <% } %>
+                        </td>
                         <td class="px-24 py-2 flex space-x-2">
                     </tr>
-                    
+
                     <% } %>
                     <% }%>
                 </tbody>
             </table>
 
             <!-- Botones para ordenar -->
-<div class="mt-4 flex space-x-2">
-    <button onclick="ordenarComputadoras(true)" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Ordenar por Fecha Ascendente</button>
-    <button onclick="ordenarComputadoras(false)" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Ordenar por Fecha Descendente</button>
-</div>
+            <div class="mt-4 flex space-x-2">
+                <button onclick="ordenarComputadoras(true)" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Ordenar por Fecha Ascendente</button>
+                <button onclick="ordenarComputadoras(false)" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Ordenar por Fecha Descendente</button>
+            </div>
 
             <!-- Formulario para agregar piezas -->
             <h2 class="text-xl font-bold mt-6">Ensamblar una computadora</h2>
@@ -108,22 +108,22 @@
                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg">Agregar Pieza</button>
             </form>
         </div>
-                
+
         <script>
-    function ordenarComputadoras(ascendente) {
-    let tbody = document.getElementById("computadoras-body");
-    let filas = Array.from(tbody.querySelectorAll("tr"));
+            function ordenarComputadoras(ascendente) {
+                let tbody = document.getElementById("computadoras-body");
+                let filas = Array.from(tbody.querySelectorAll("tr"));
 
-    filas.sort((a, b) => {
-        let fechaA = new Date(a.cells[3].innerText.trim()); // Cambiado a cells[3]
-        let fechaB = new Date(b.cells[3].innerText.trim()); // Cambiado a cells[3]
-        return ascendente ? fechaA - fechaB : fechaB - fechaA;
-    });
+                filas.sort((a, b) => {
+                    let fechaA = new Date(a.cells[3].innerText.trim()); // Cambiado a cells[3]
+                    let fechaB = new Date(b.cells[3].innerText.trim()); // Cambiado a cells[3]
+                    return ascendente ? fechaA - fechaB : fechaB - fechaA;
+                });
 
-    tbody.innerHTML = "";
-    filas.forEach(fila => tbody.appendChild(fila));
-}
-</script>
+                tbody.innerHTML = "";
+                filas.forEach(fila => tbody.appendChild(fila));
+            }
+        </script>
 
 
 

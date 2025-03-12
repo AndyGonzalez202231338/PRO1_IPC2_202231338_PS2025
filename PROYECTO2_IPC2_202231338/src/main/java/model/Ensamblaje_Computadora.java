@@ -34,6 +34,11 @@ public class Ensamblaje_Computadora {
         this.CostoTotal = CostoTotal;
         this.Estado = Estado;
     }
+
+    public Ensamblaje_Computadora() {
+    }
+    
+    
     
     public Integer getID() {
         return ID;

@@ -27,9 +27,10 @@ public class Usuario {
         this.roleId = roleId;
 
     }
-    
-    
 
+    public Usuario() {
+    }
+    
     
 
     public int getId() {
@@ -63,5 +64,11 @@ public class Usuario {
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", password=" + password + ", roleId=" + roleId + '}';
+    }
    
+    
 }
