@@ -9,6 +9,10 @@
 <%@page import="persistence.PiezaDAO"%>
 
 <%
+    /**
+     * Apartado hecho para mostrar las piezas o componentes de computadoras
+     * se encarga de la edicion de componentes al igual que de acciones como ordeanr por cantidades o mostrar advertencias
+     */
     PiezaDAO piezaDAO = new PiezaDAO();
     int id = Integer.parseInt(request.getParameter("id"));
     Pieza pieza = piezaDAO.findById(String.valueOf(id));

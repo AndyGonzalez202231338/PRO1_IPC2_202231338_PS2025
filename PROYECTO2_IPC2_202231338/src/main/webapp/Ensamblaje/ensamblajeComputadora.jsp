@@ -9,6 +9,9 @@
 <%@page import="java.util.List"%>
 
 <%
+    /**
+     * mustra las computadora ensambladas y las describe
+     */
     System.out.println("estas en piezas.jsp");
     List<Ensamblaje_Computadora> computadoras = (List<Ensamblaje_Computadora>) request.getAttribute("ensamblajeComputadoras");
     System.out.println("se han extraido las piezas");

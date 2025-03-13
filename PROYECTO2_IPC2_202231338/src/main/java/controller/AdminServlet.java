@@ -52,7 +52,7 @@ public class AdminServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * 
      *
      * @param request servlet request
      * @param response servlet response
@@ -66,7 +66,7 @@ public class AdminServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP <code>POST</code> method.
+     * valida que los parametros de registro de un usuario, lo manda a UsuarioDAO a bucar si existe y si cumple con su rol
      *
      * @param request servlet request
      * @param response servlet response

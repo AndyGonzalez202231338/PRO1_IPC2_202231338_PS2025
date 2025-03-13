@@ -54,7 +54,7 @@ public class Ensamblaje_ComputadoraServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * verifica el esatdo de las computadoras para enviar la lista segun el contexto y el panel.jsp donde se dese ver la lista
      *
      * @param request servlet request
      * @param response servlet response
@@ -99,7 +99,14 @@ public class Ensamblaje_ComputadoraServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error en la base de datos");
         }
     }
-
+    /**
+     * realiza la tarea de mostrar las computadora que cumplan con el estado estar ensambladas, les cambia el estado a En Venta
+     * para poder separalos segun el area donde se desea ver una lista
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

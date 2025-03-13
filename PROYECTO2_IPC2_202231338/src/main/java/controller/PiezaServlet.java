@@ -30,7 +30,13 @@ public class PiezaServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
     }
-
+    /**
+     * verifica las acciones que se desea con la lista de piezas que se necesiten, busca y devuleve la ruta adecuada de la web
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

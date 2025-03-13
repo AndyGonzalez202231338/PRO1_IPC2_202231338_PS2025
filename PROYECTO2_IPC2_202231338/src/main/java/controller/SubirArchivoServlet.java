@@ -63,7 +63,9 @@ public class SubirArchivoServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    /**
+     * envia la validacion de un archivo existente para su lectura en subirArchivo.DAO
+     */
     private SubirArchivoDAO subirArchivoDAO = new SubirArchivoDAO();
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

@@ -29,7 +29,12 @@ public class DBConnection {
     }
 
     private DBConnection() {}
-
+    /**
+     * Este metodo estatico se mantiene de esta manera para eviat la creacion de una nueva conneccion a ala base de datos que se inecesaria
+     * evita la mala practica de llamar mas de una vez la conexion.
+     * @return
+     * @throws SQLException 
+     */
     public static Connection getConnection() throws SQLException {
         if (connection == null || connection.isClosed()) {
             synchronized (DBConnection.class) {

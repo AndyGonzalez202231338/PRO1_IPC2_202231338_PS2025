@@ -7,6 +7,9 @@
 <%@page import="model.Rol"%>
 <%@page import="java.util.List"%>
 <%
+    /*Es la parte visual que recibe la lista de usuario y los tipos de roles para desplegarlo en la web al igual que permite la comunicacion en la edicion
+    con las clases UsuarioServlet
+    */
     String view = request.getParameter("view");
 
     if ("create".equals(view) && request.getAttribute("roles") == null) {

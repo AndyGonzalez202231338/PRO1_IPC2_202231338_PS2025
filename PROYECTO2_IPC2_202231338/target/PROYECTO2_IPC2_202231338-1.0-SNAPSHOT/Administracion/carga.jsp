@@ -7,6 +7,8 @@
 <%@page import="model.Computadora"%>
 <%@page import="model.Pieza"%>
 <%
+    /*Este apartado sirve para mostrar el ensamble de computadoras, recibe las listas de piezas y computadoras para desplegarlo en la parte viual
+    */
     String view = request.getParameter("view");
     
     Usuario user = (Usuario) session.getAttribute("user");

@@ -7,6 +7,11 @@
 <%@page import="model.Usuario"%>
 <%@page import="model.Pieza"%>
 <%
+    /**
+     * Panel de area de esanmblaje, donde se escuentra la carga de datos ademas de mostrar a lo sususario modelos y hace posible
+     * el envio de una computadora ensamblada al aera de venta por medio de su estado
+     */
+    
     String view = request.getParameter("view");
 
     Usuario user = (Usuario) session.getAttribute("user");

@@ -8,6 +8,10 @@
 <%@page import="model.Ensamblaje_Computadora"%>
 
 <%
+    /**
+     * recibe computadora ensambladas y maneja la creacion de usuarios que adquieren una computadora
+     * cambia un caomputadora ensamblada al estado de vendidad, registra la venta y cerea un cliente y los detalles de venta
+     */
     String view = request.getParameter("view");
 
     Usuario user = (Usuario) session.getAttribute("user");

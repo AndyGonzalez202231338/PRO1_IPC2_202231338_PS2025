@@ -32,7 +32,13 @@ public class SubirArchivoDAO {
     private static final Pattern ENSAMBLE_PIEZAS_PATTERN = Pattern.compile("ENSAMBLE_PIEZAS\\(\"([^\"]+)\",\\s*\"([^\"]+)\",\\s*(\\d+)\\)");
     private static final Pattern ENSAMBLAR_COMPUTADORA_PATTERN = Pattern.compile("ENSAMBLAR_COMPUTADORA\\(\"([^\"]+)\",\\s*([a-zA-Z0-9_]+),\\s*\"(\\d{2}/\\d{2}/\\d{4})\"\\)");
 
-    
+/**
+ * Recibe todo el texto dentro de un archivo y compara si cumple con los Patterns para llamar a sus metodo insert segun el caso
+ * @param fileContent
+ * @return
+ * @throws SQLException
+ * @throws IOException 
+ */    
     public String procesarArchivo(InputStream fileContent) throws SQLException, IOException {
         System.out.println("ENTRO A PROCESARARCHIVO xxx");
         StringBuilder resultado = new StringBuilder();
@@ -66,7 +72,13 @@ public class SubirArchivoDAO {
         
         return resultado.toString();
     }
-    
+    /**
+     * Metodo especial para extraer los atributos de un Usuario, valida si existe ya un usuario con esos datos o si una contraseña no cumple con los valores corresctos
+     * @param linea
+     * @param conn
+     * @return
+     * @throws SQLException 
+     */
     private String insertarUsuario(String linea, Connection conn) throws SQLException {
         System.out.println("    entre a ingresar el ususario");
         Matcher matcher = USUARIO_PATTERN.matcher(linea);
@@ -101,7 +113,13 @@ public class SubirArchivoDAO {
         return "❌ Error en el formato de USUARIO";
     }
     
-    
+    /**
+     * verifica la existencia de piezas y si ya existe simplemente la cantidad de la piezas en 1
+     * @param linea
+     * @param conn
+     * @return
+     * @throws SQLException 
+     */
     private String insertarPieza(String linea, Connection conn) throws SQLException {
         System.out.println("entro a insertar piezas");
     Matcher matcher = PIEZA_PATTERN.matcher(linea);
@@ -143,7 +161,13 @@ public class SubirArchivoDAO {
     return "Error en el formato de PIEZA";
 }
 
-    
+    /**
+     * Sirve para insertar nuevos modelos de computadoras, valida la existencia de la misma antes de isertarla
+     * @param linea
+     * @param conn
+     * @return
+     * @throws SQLException 
+     */
     private String insertarComputadora(String linea, Connection conn) throws SQLException {
         Matcher matcher = COMPUTADORA_PATTERN.matcher(linea);
         if (matcher.find()) {
@@ -170,6 +194,16 @@ public class SubirArchivoDAO {
         return "Error en el formato de COMPUTADORA";
     }
     
+    /**
+     * Verifica si ya existe el ensamblaje de pieza
+     * guarda el dato del usuario en session como ensamblador
+     * verifica el modelo existente y si las piezas son exsitente
+     * para luego guardar el ensamblaje
+     * @param linea
+     * @param conn
+     * @return
+     * @throws SQLException 
+     */
     private String insertarEnsamblajePieza(String linea, Connection conn) throws SQLException {
     Matcher matcher = ENSAMBLE_PIEZAS_PATTERN.matcher(linea);
     if (matcher.find()) {
@@ -186,7 +220,7 @@ public class SubirArchivoDAO {
             if (rs.next()) {
                 idComputadora = rs.getInt("ID");
             } else {
-                return "❌ Error: La computadora '" + nombreComputadora + "' no existe";
+                return "Error: La computadora '" + nombreComputadora + "' no existe";
             }
         }
 
@@ -199,7 +233,7 @@ public class SubirArchivoDAO {
             if (rs.next()) {
                 idPieza = rs.getInt("ID");
             } else {
-                return "❌ Error: La pieza '" + nombrePieza + "' no existe";
+                return " Error: La pieza '" + nombrePieza + "' no existe";
             }
         }
 
@@ -218,7 +252,7 @@ public class SubirArchivoDAO {
                     updateStmt.setInt(2, idComputadora);
                     updateStmt.setInt(3, idPieza);
                     updateStmt.executeUpdate();
-                    return "✅ Ensamble actualizado: " + nombrePieza + " x" + nuevaCantidad + " en " + nombreComputadora;
+                    return " Ensamble actualizado: " + nombrePieza + " x" + nuevaCantidad + " en " + nombreComputadora;
                 }
             }
         }
@@ -230,12 +264,19 @@ public class SubirArchivoDAO {
             insertStmt.setInt(2, idPieza);
             insertStmt.setInt(3, cantidad);
             insertStmt.executeUpdate();
-            return "✅ Ensamble realizado: " + nombrePieza + " x" + cantidad + " en " + nombreComputadora;
+            return "Ensamble realizado: " + nombrePieza + " x" + cantidad + " en " + nombreComputadora;
         }
     }
-    return "❌ Error en el formato de ENSAMBLE_PIEZAS";
+    return " Error en el formato de ENSAMBLE_PIEZAS";
 }
 
+    /**
+     * Guarda los datos del ususario en session como ensamblador y realiza la operacion de gauredar el precio segun el modelo indicado
+     * @param linea
+     * @param conn
+     * @return
+     * @throws SQLException 
+     */
 private String insertarEnsamblajeComputadora(String linea, Connection conn) throws SQLException {
     Matcher matcher = ENSAMBLAR_COMPUTADORA_PATTERN.matcher(linea);
     if (matcher.find()) {
@@ -255,7 +296,7 @@ try (PreparedStatement stmt = conn.prepareStatement(queryComputadora)) {
         idComputadora = rs.getInt("ID");
         precioVenta = rs.getDouble("PrecioVenta");  // Obtener el precio de venta correctamente
     } else {
-        return "❌ Error: La computadora '" + nombreComputadora + "' no existe";
+        return " Error: La computadora '" + nombreComputadora + "' no existe";
     }
 }
 
@@ -265,7 +306,7 @@ try (PreparedStatement stmt = conn.prepareStatement(queryComputadora)) {
             stmt.setString(1, nombreUsuario);
             ResultSet rs = stmt.executeQuery();
             if (!rs.next()) {
-                return "❌ Error: El usuario '" + nombreUsuario + "' no existe";
+                return " Error: El usuario '" + nombreUsuario + "' no existe";
             }
         }
 
@@ -293,10 +334,10 @@ try (PreparedStatement stmt = conn.prepareStatement(queryComputadora)) {
             stmt.setDouble(4, costoTotal);
             System.out.println("|"+idComputadora+"|"+nombreUsuario+"|"+costoTotal);
             stmt.executeUpdate();
-            return "✅ Ensamblaje de computadora '" + nombreComputadora + "' registrado con costo total: $" + costoTotal;
+            return " Ensamblaje de computadora '" + nombreComputadora + "' registrado con costo total: $" + costoTotal;
         }
     }
-    return "❌ Error en el formato de ENSAMBLAR_COMPUTADORA";
+    return "Error en el formato de ENSAMBLAR_COMPUTADORA";
 }
 
 }

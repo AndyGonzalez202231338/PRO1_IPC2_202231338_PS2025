@@ -52,7 +52,7 @@ public class ComputadoraServlet extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
-     * Handles the HTTP <code>GET</code> method.
+     * Valida segun computadoraDAO y recibe la lista de objetos de tipo computadoras con los datos extraidos de la base de datos y lo regresa al jsp.
      *
      * @param request servlet request
      * @param response servlet response
